@@ -7,4 +7,3 @@ def main() :
    print(ord(s))
       
 main()
-
