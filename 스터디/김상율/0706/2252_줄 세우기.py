@@ -27,8 +27,6 @@ def main() :
         line[B].append(A)
         lst[idx - 1] = B
         
-    print(line,lst,n,idx)
-        
     return 0;
         
 main()
