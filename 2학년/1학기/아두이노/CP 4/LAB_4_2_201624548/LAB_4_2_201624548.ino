@@ -1,0 +1,32 @@
+void setup() {
+  Serial.begin(9600);     // 시리얼 포트 초기화
+}
+
+void loop() {
+  // 정렬할 문자열 배열
+  String str[5] = {"abc", "ABC", "!@#", "라라라", "123"};
+  //String str[7] = {"red", "orange", "yellow", "green", "blue", "indigo", "violet"} ;
+
+  // 문자열 정렬
+  for (int i = 0; i < 4; i++) {
+    for (int j = i + 1; j < 5; j++) {
+      int compare = str[i].compareTo(str[j]);
+      if (compare > 0) { // 오름차순으로 정렬
+        Serial.print(String(i) + "번째 변환전 : " + str[i] + " 와 " + str[j]);
+        Serial.println();
+        String temp = str[i];
+        str[i] = str[j];
+        str[j] = temp;
+        Serial.print(String(i) + "번째 변환후 : " + str[i] + " 와 " + str[j]);
+        Serial.println();
+      }
+    }
+  }
+  
+  // 정렬된 문자열 출력3
+  for (int i = 0; i < 4; i++) {
+    Serial.println(String(i) + " : " + str[i]);
+  }
+  
+  while (true);
+}

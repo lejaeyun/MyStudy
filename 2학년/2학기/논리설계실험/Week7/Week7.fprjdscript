@@ -1,0 +1,30 @@
+if [ -f   /opt/Xilinx/14.1/ISE_DS/settings32.sh ]; then 
+ source /opt/Xilinx/14.1/ISE_DS/settings32.sh >> /tmp/log 
+fi
+if [ -f   /opt/Xilinx/14.1/ISE_DS/settings64.sh ]; then
+ source /opt/Xilinx/14.1/ISE_DS/settings64.sh >> /tmp/log
+fi
+ 
+echo work=./work >> FSM_tb.init
+echo verilog work FSM.v >> FSM_tb.prj
+echo verilog work FSM_tb.v >> FSM_tb.prj
+echo vcd dumpfile FSM_tb.vcd >> FSM_tb.tcl
+echo vcd dumpvars -m /FSM_tb -l 1 >> FSM_tb.tcl
+echo run 10000 ns >> FSM_tb.tcl
+echo vcd dumpflush >> FSM_tb.tcl
+echo quit -f >> FSM_tb.tcl
+fuse -top work.FSM_tb -init FSM_tb.init -prj FSM_tb.prj  -o FSM_tb.exe
+./FSM_tb.exe -tclbatch FSM_tb.tcl
+rm FSM_tb.tcl
+rm FSM_tb.init
+rm FSM_tb.prj
+rm fuse.xmsgs
+rm fuseRelaunch.cmd
+rm isim.wdb
+rm -f FSM_tb.exe fuse.log isim.log
+rm -rf isim
+rm list of verilog or VHDL files
+rm -rf ./work
+rm -rf FSM.v
+rm -rf FSM_tb.v
+echo Finish simulation!!

@@ -1,0 +1,67 @@
+StimulianSaveFile
+LanguageType Verilog
+tbModuleName FSM_tb
+ModuleName FSM
+TimeUnit ns
+TotalTime 10000
+GridInterval 100
+Parameters
+S0 0 integer 3 0
+S1 1 integer 3 0
+S2 2 integer 3 0
+End
+Port
+-1 # 1 Binary clock singlebit in 0 0 PortEnd 0
+-1 ! 1 Binary Din singlebit in 0 0 PortEnd 0
+-1 $ 1 Binary reset singlebit in 0 0 PortEnd 0
+0 " 1 Binary Dout singlebit out 0 0 PortEnd 0
+End
+pixelTimeRatio 5
+HorzZoomOutScale 80
+WavesHorzScrollBarMax 196602
+WavesHorzScrollBarPosition 0
+WavesHorzScrollBarEnabled -1
+DefaultVertInterval 32
+UnScaledDefaultVertInterval 16
+UnScaledDefaultVertSignalHeight 10
+WavesVertScrollBarMax 100
+WavesVertScrollBarPosition 0
+WavesVertScrollBarEnabled 0
+Vars
+s!
+t0
+0 1000 2 0
+800 400 2 1
+1400 0 1 0
+1800 600 2 1
+2200 0 1 0
+3000 100 1 0
+3700 200 32 1
+3800 200 31 0
+s"
+t0
+0 0 1 0
+s#
+t0
+0 200 50 1
+100 200 50 0
+s$
+t0
+0 0 1 0
+200 0 1 1
+400 0 1 0
+End
+Cursors
+2300
+End
+ActiveCursorIndex 0
+versionCode
+20070511
+psrFileName
+C:\Flowrian\_analyze\FSM.psr
+systemCExportSimulationTime
+10000
+systemCExportSimulationTimeUnit
+10000
+systemCProbes
+End

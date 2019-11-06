@@ -1,0 +1,12 @@
+FSM_tb
+	Din
+	Dout
+	clock
+	reset
+	U0
+		Din
+		Dout
+		clock
+		reset
+		current_state
+		next_state

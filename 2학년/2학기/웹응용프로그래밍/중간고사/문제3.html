@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Problem 3</title>
+		<style>
+		</style>
+	</head>
+	<script language="javascript"> 
+	
+		var index = 0;
+		var solveindex = 0;
+		
+		function reload() {
+			window.localStorage["index"] = index;
+			location.reload();
+			index = window.localStorage["index"];
+			alert(index);
+		}
+		
+		function selectedBtn(id) {
+			if (id == "문제 편집") {
+				var con = document.getElementById("solveproblem");
+				con.style.display = 'block';
+			}
+			else if (id == "문제 제출하기") {
+				var con = document.getElementById("postproblem");
+				con.style.display = 'block';
+			}
+			else if (id == "문제 풀기") {
+				var con = document.getElementById("solveproblem");
+				con.style.display = 'block';
+			}
+			else if (id == "문제 저장") {
+				alert(index);
+				window.localStorage[index] = [document.getElementById('explain').value ,document.getElementById('posttext').value, document.getElementById('pa1').value, document.getElementById('pa2').value, document.getElementById('pa3').value, document.getElementById('pa4').value, document.getElementById('pa5').value, document.getElementById('postanswer').value];
+				var x = window.localStorage[index];
+				index = index + 1;
+				reload();
+			}
+			else if (id == "문제 제출") {
+				var con = document.getElementById("solveproblem");
+				con.style.display = 'none';
+				if (document.getElementById("solveanswer") == answer[solveindex][5]) {
+					alert("정답입니다.")
+				}
+				else {
+					alert("틀렸습니다.")
+				}
+				reload();
+			}
+		}
+	
+	</script>
+	
+	<body>
+	
+		<Form>
+			<input type=button id=submit value="문제 편집"
+                onclick=selectedBtn(this.value) style="width: 100pt; height: 30pt; margin : 3px">
+			<input type=button id=submit value="문제 제출하기"
+                onclick=selectedBtn(this.value) style="width: 100pt; height: 30pt; margin : 3px">
+			<input type=button id=submit value="문제 풀기"
+                onclick=selectedBtn(this.value) style="width: 100pt; height: 30pt; margin : 3px"><br>
+				
+			<div id = "postproblem" style = "display : none">
+				문제 설명<input type="text" id="explain" name = "posttext" style="width:200px; height:30; letter-spacing: 1px"><br>
+				
+				
+				<input type="text" id="posttext" name = "posttext" style="width:500px; height:300px; letter-spacing: 1px"><br>
+				
+				1. <input type="text" id="pa1" style="width:150px; height:30px; letter-spacing: 1px"><br>
+				2. <input type="text" id="pa2" style="width:150px; height:30px; letter-spacing: 1px"><br>
+				3. <input type="text" id="pa3" style="width:150px; height:30px; letter-spacing: 1px"><br>
+				4. <input type="text" id="pa4" style="width:150px; height:30px; letter-spacing: 1px"><br>
+				5. <input type="text" id="pa5" style="width:150px; height:30px; letter-spacing: 1px"><br>
+				
+				정답 : <input type="text" id="postanswer" style="width:120px; height:30px; letter-spacing: 1px"><br>
+			
+			<input type=button id=submit value="문제 저장"
+                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt; margin : 3px">
+			</div>
+			
+			<div id = "solveproblem" style = "display : none">
+				<input type="text" name="solvetext" style="width:500px; height:300px; letter-spacing: 1px"><br>
+				
+				1. <input type="text" name="sa1" style="width:150px; height:30px; letter-spacing: 1px"><br>
+				2. <input type="text" name="sa2" style="width:150px; height:30px; letter-spacing: 1px"><br>
+				3. <input type="text" name="sa3" style="width:150px; height:30px; letter-spacing: 1px"><br>
+				4. <input type="text" name="sa4" style="width:150px; height:30px; letter-spacing: 1px"><br>
+				5. <input type="text" name="sa5" style="width:150px; height:30px; letter-spacing: 1px"><br>
+				
+				정답 : <input type="text" name="solveanswer" style="width:120px; height:30px; letter-spacing: 1px"><br>
+			
+			<input type=button id=submit value="문제 제출"
+                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt; margin : 3px">
+			</div>
+			
+		</Form>
+	</body>
+	
+</html>

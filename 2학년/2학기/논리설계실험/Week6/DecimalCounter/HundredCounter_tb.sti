@@ -1,0 +1,91 @@
+StimulianSaveFile
+LanguageType Verilog
+tbModuleName SramFxF_tb
+ModuleName SramFxF
+TimeUnit ns
+TotalTime 10000
+GridInterval 100
+Parameters
+End
+Port
+-1 E 0 Binary ADRESS multibit in 1 0 Children G [1] H [0] ChildrenEnd PortEnd 0
+-1 Q 0 Binary Din multibit in 3 0 Children U [3] V [2] W [1] X [0] ChildrenEnd PortEnd 0
+-1 Y 1 Binary RST singlebit in 0 0 PortEnd 0
+-1 Z 1 Binary RW singlebit in 0 0 PortEnd 0
+0 I 0 Binary DataOut multibit out 3 0 Children M [3] N [2] O [1] P [0] ChildrenEnd PortEnd 0
+End
+pixelTimeRatio 5
+HorzZoomOutScale 80
+WavesHorzScrollBarMax 98301
+WavesHorzScrollBarPosition 0
+WavesHorzScrollBarEnabled -1
+DefaultVertInterval 32
+UnScaledDefaultVertInterval 16
+UnScaledDefaultVertSignalHeight 10
+WavesVertScrollBarMax 100
+WavesVertScrollBarPosition 0
+WavesVertScrollBarEnabled 0
+Vars
+sG
+t0
+0 1000 2 0
+900 600 2 1
+1600 0 1 0
+sH
+t0
+0 1300 2 0
+1200 300 2 1
+1600 0 1 0
+sM
+t0
+0 0 1 0
+sN
+t0
+0 0 1 0
+sO
+t0
+0 0 1 0
+sP
+t0
+0 0 1 0
+sU
+t0
+0 1600 2 0
+1500 0 1 1
+sV
+t0
+0 1300 2 0
+1200 0 1 1
+sW
+t0
+0 1000 2 0
+900 0 1 1
+sX
+t0
+0 0 1 0
+600 0 1 1
+700 0 1 0
+sY
+t0
+0 0 1 1
+100 0 1 0
+sZ
+t0
+0 0 1 0
+500 300 4 1
+700 300 4 0
+End
+Cursors
+1000
+End
+ActiveCursorIndex 0
+versionCode
+20070511
+psrFileName
+C:\Flowrian\_analyze\SramFxF.psr
+systemCExportSimulationTime
+10000
+systemCExportSimulationTimeUnit
+10000
+systemCProbes
+End

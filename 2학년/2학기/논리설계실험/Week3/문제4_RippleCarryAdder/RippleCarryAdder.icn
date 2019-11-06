@@ -1,0 +1,96 @@
+SymbolianIcn ver1.00(2006.04.27)
+ModuleName RippleCarryAdder
+LanguageType Veirlog
+GridInterval 8
+MillimetersIn100RealScaledUnit 25
+ZoomOutScale 32
+NumberOfHorzPapaers 1
+NumberOfVertPapaers 1
+IfDrawModuleName True
+IfDrawPortnameText True
+ModuleNameDrawPosition middle
+Boxes
+Box Left: 352 Top: 560 ,Right: 488 ,Bottom: 704
+End
+Parameters
+End
+Ports
+Port Left: 328 Top: 568 ,SymbolSideLeft: 352 ,SymbolSideTop: 568
+Portname: A0 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 328 Top: 584 ,SymbolSideLeft: 352 ,SymbolSideTop: 584
+Portname: A1 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 328 Top: 600 ,SymbolSideLeft: 352 ,SymbolSideTop: 600
+Portname: A2 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 328 Top: 616 ,SymbolSideLeft: 352 ,SymbolSideTop: 616
+Portname: A3 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 328 Top: 632 ,SymbolSideLeft: 352 ,SymbolSideTop: 632
+Portname: B0 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 328 Top: 648 ,SymbolSideLeft: 352 ,SymbolSideTop: 648
+Portname: B1 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 328 Top: 664 ,SymbolSideLeft: 352 ,SymbolSideTop: 664
+Portname: B2 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 328 Top: 680 ,SymbolSideLeft: 352 ,SymbolSideTop: 680
+Portname: B3 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 328 Top: 696 ,SymbolSideLeft: 352 ,SymbolSideTop: 696
+Portname: C0 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 512 Top: 568 ,SymbolSideLeft: 488 ,SymbolSideTop: 568
+Portname: S0 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 2 ,LV:
+0
+,RV:
+0
+Port Left: 512 Top: 584 ,SymbolSideLeft: 488 ,SymbolSideTop: 584
+Portname: S1 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 2 ,LV:
+0
+,RV:
+0
+Port Left: 512 Top: 600 ,SymbolSideLeft: 488 ,SymbolSideTop: 600
+Portname: S2 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 2 ,LV:
+0
+,RV:
+0
+Port Left: 512 Top: 616 ,SymbolSideLeft: 488 ,SymbolSideTop: 616
+Portname: S3 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 2 ,LV:
+0
+,RV:
+0
+Port Left: 512 Top: 632 ,SymbolSideLeft: 488 ,SymbolSideTop: 632
+Portname: S4 ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 2 ,LV:
+0
+,RV:
+0
+End
+Ellipses
+End
+Lines
+End
+Arcs
+End
+Texts
+End

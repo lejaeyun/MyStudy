@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Problem 2</title>
+		<style>
+		</style>
+	</head>
+	<script language="javascript">
+		var text1 = "";
+		var op = "";
+		var text2 = "";
+		var result = "";
+		var isDotSelected = false;
+		var arr = new Array();
+		
+		function selectedBtn(id) {
+			if(id==".") {
+				isDotSelected = true;
+			}
+			else {
+				if (op == "") {
+					if (text1 == ""){
+						document.getElementById('showText').value = "";
+					}
+					text1 += id;
+				} else {
+					if (text2 == ""){
+						document.getElementById('showText').value = "";
+					}
+					text2 += id;
+				}
+				randomnumbergenerator();
+			}
+			document.getElementById('showText').value = document.getElementById('showText').value + id;
+			
+		}
+		function randomnumbergenerator()
+		{
+			// randomnumber generator
+			var i = 0;
+			while ( i < 10)
+			{
+				var check = true;
+				var randomnumber = Math.floor(Math.random() * 10);
+				for(var j = 0; j < arr.length; j++){
+					if (arr[j] == randomnumber){
+						check = false;
+						break;
+					}
+				}
+				if (check == true){
+					arr[i-1] = randomnumber;
+					document.getElementById(i).value = arr[i-1];
+					i = i + 1;
+				}
+			}
+			arr.splice(0,arr.length);
+		}
+		
+		function selectedOp(id) {
+			if (op != ""){
+				text1 = getResult();
+			}
+			op = id;
+			document.getElementById('showText').value = text1; 
+		}
+		
+		function mathText(text) {
+			if(text1 == "") {
+				alert("값이 없습니다.");
+			}
+			switch(text) {
+			case "_sin" :
+				result = Math.sin(parseInt(text1));
+				document.getElementById('showText').value = text1 + "의 sin 값 : " + result;
+				break;
+			case "_cos" :
+				result = Math.cos(parseInt(text1));
+				document.getElementById('showText').value = text1 + "의 cos 값 : " + result;
+				break;
+			case "_tan" :
+				result = Math.tan(parseInt(text1));
+				document.getElementById('showText').value = text1 + "의 tan 값 : " + result;
+				break;
+			}
+		}
+	 
+		function clearAll() {
+			text1 = "";
+			text2 = "";
+			op = "";
+			result = "";
+			document.getElementById('showText').value = "";
+		}
+		
+		function getResult() {
+			result = text1 + op + text2;
+		
+			document.getElementById('showText').value = eval(result).toFixed(3);    
+			text1 = "";
+			text2 = "";
+			op = "";
+			result = "";
+			
+			isDotSelected = false;
+			return document.getElementById('showText').value;
+			
+		}
+		
+	</script>  
+	<body>
+		<FORM>
+			<input type="text" id="showText"
+						style="width: 230pt; height: 20pt"><br>
+						
+			<input type="button" id="clearBtn"
+                onclick=clearAll() value="Clear" style="width: 225pt; height: 30pt; margin : 5px"><br>
+				
+
+			<input type=button id=1 value=7
+                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt">
+            <input type=button id=2 value=8
+                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt; margin : 5px;">
+            <input  type=button id=3 value=9 
+					onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt; margin : 5px;">
+            <input type=button id=plus value=+
+                onclick=selectedOp("+") style="width: 50pt; height: 30pt; margin : 5px;"><br>
+				
+			<input type=button id=4 value=4
+                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt">
+            <input type=button id=5 value=5
+                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt; margin : 5px;">
+            <input type=button id=6 value=6
+                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt; margin : 5px;">
+            <input type=button id=minus value="-"
+                onclick=selectedOp("-") style="width: 50pt; height: 30pt; margin : 5px;"><br>
+				
+			<input type=button id=7 value=1
+                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt">
+            <input type=button id=8 value=2
+                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt; margin : 5px;">
+            <input type=button id=9 value=3
+                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt; margin : 5px;">
+            <input type=button id=multi value=*
+                onclick=selectedOp("*") style="width: 50pt; height: 30pt; margin : 5px;"><br>
+
+			<input type=button id=0 value=0
+                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt">
+            <input type=button id=dot value="."
+                onclick=selectedBtn('.') style="width: 50pt; height: 30pt; margin : 5px;">
+            <input type=button id=divide value="/"
+                onclick=selectedOp("/") style="width: 50pt; height: 30pt; margin : 5px;">
+            <input type="button" id="equal" value="="
+                onclick=getResult() style="width: 50pt; height: 30pt; margin : 5px;"><br>
+		</FORM>
+	</body>
+
+</html>
