@@ -5,99 +5,255 @@
 		<meta charset = "utf-8">
 		<title>Problem 3</title>
 		<style>
+			h1,h3 { text-align : left; font-family: tahoma, geneva, sans-serif;}
+			p {marin-left: 5%; margin-right: 5%; font-family: arial, helvetica, sans-serif;}
+			ul {margin-left: 10%;}
+			a {text-decoration: none;}
+			a:hover {text-decoration: none;}
+			.nav { width: 100%; border-top: 3px dashed blue; padding-top: 10px;}
+			.hilighted {background-color: yellow;}
+			input {width: 150px;}
+			form > p {margin: 0px;}
 		</style>
 	</head>
 	<script language="javascript"> 
 	
-		var index = 0;
-		var solveindex = 0;
+		var currentNode;
+		var idcount = 1;
+		var nowindex;
 		
-		function reload() {
-			window.localStorage["index"] = index;
-			location.reload();
-			index = window.localStorage["index"];
-			alert(index);
+		function start()
+		{
+			document.getElementById("appendButton").addEventListener("click", appendNode, false);
+			document.getElementById("replaceButton").addEventListener("click", replace, false);
+			document.getElementById("solveButton").addEventListener("click", solve, false);
+			document.getElementById("openbtn").addEventListener("click", openBtn, false);
+			currentNode = document.getElementById("para");
 		}
 		
-		function selectedBtn(id) {
-			if (id == "문제 편집") {
-				var con = document.getElementById("solveproblem");
-				con.style.display = 'block';
-			}
-			else if (id == "문제 제출하기") {
-				var con = document.getElementById("postproblem");
-				con.style.display = 'block';
-			}
-			else if (id == "문제 풀기") {
-				var con = document.getElementById("solveproblem");
-				con.style.display = 'block';
-			}
-			else if (id == "문제 저장") {
-				alert(index);
-				window.localStorage[index] = [document.getElementById('explain').value ,document.getElementById('posttext').value, document.getElementById('pa1').value, document.getElementById('pa2').value, document.getElementById('pa3').value, document.getElementById('pa4').value, document.getElementById('pa5').value, document.getElementById('postanswer').value];
-				var x = window.localStorage[index];
-				index = index + 1;
-				reload();
-			}
-			else if (id == "문제 제출") {
+		function openBtn() {
+				var con = document.getElementById("replaceproblem");
+				con.style.display = 'none';
 				var con = document.getElementById("solveproblem");
 				con.style.display = 'none';
-				if (document.getElementById("solveanswer") == answer[solveindex][5]) {
-					alert("정답입니다.")
-				}
-				else {
-					alert("틀렸습니다.")
-				}
-				reload();
+				var con = document.getElementById("postproblem");
+				con.style.display = 'block';
+		}
+		
+		function selectedBtn() {
+			if (this.id.match("solve"))
+				solvedisplay(this.id);
+			else if (this.id.match("replace"))
+				replacedisplay(this.id);
+			else if (this.id.match("remove"))
+				remove(this.id);
+		}
+		
+		function appendNode()
+		{
+		
+			var newNode = createNewNode( document.getElementById("append").value , 1 );
+			currentNode.appendChild(newNode);
+			switchTo(newNode);
+			
+			var item = document.getElementById("append").value + ',' + document.getElementById("append1").value + ',' + document.getElementById("append2").value + ',' + document.getElementById("append3").value + ',' + document.getElementById("append4").value + ',' + document.getElementById("append5").value + ',' + document.getElementById("append6").value;
+			localStorage.setItem((idcount-1), item);
+			
+			document.getElementById("append").value = "";
+			document.getElementById("append1").value = "";
+			document.getElementById("append2").value = "";
+			document.getElementById("append3").value = "";
+			document.getElementById("append4").value = "";
+			document.getElementById("append5").value = "";
+			document.getElementById("append6").value = "";
+			
+			var con = document.getElementById("postproblem");
+			con.style.display = 'none';
+			setbutton(currentNode, idcount - 1)
+			
+		}
+		
+		function setbutton(nownode, num)
+		{
+			
+			var jbBtn = document.createElement( 'button' );
+			var jbBtnText = document.createTextNode( '풀기' );
+			jbBtn.appendChild( jbBtnText );
+			jbBtn.setAttribute("id", "solve," + (idcount-1));
+			jbBtn.addEventListener("click", selectedBtn, false);
+			nownode.appendChild( jbBtn );
+			
+			var jbBtn = document.createElement( 'button' );
+			var jbBtnText = document.createTextNode( '수정' );
+			jbBtn.appendChild( jbBtnText );
+			jbBtn.setAttribute("id", "replace," + (idcount-1));
+			jbBtn.addEventListener("click", selectedBtn, false);
+			nownode.appendChild( jbBtn );
+			
+			var jbBtn = document.createElement( 'button' );
+			var jbBtnText = document.createTextNode( '제거' );
+			jbBtn.appendChild( jbBtnText );
+			jbBtn.setAttribute("id", "remove," + (idcount-1));
+			jbBtn.addEventListener("click", selectedBtn, false);
+			nownode.appendChild( jbBtn );
+		}
+		
+		function solvedisplay(id)
+		{
+			var con = document.getElementById("replaceproblem");
+			con.style.display = 'none';
+			var con = document.getElementById("solveproblem");
+			con.style.display = 'block';
+			var con = document.getElementById("postproblem");
+			con.style.display = 'none';
+			nowindex = id.split(',')[1];
+			
+			var answer = localStorage.getItem(nowindex).split(',');
+			document.getElementById("solve").value = answer[0];
+			document.getElementById("solve1").value = answer[1];
+			document.getElementById("solve2").value = answer[2];
+			document.getElementById("solve3").value = answer[3];
+			document.getElementById("solve4").value = answer[4];
+			document.getElementById("solve5").value = answer[5];
+			document.getElementById("solve6").value = "";
+		}
+		
+		
+		function replacedisplay(id)
+		{
+			var con = document.getElementById("replaceproblem");
+			con.style.display = 'block';
+			var con = document.getElementById("solveproblem");
+			con.style.display = 'none';
+			var con = document.getElementById("postproblem");
+			con.style.display = 'none';
+			nowindex = id.split(',')[1];
+			
+			var answer = localStorage.getItem(nowindex).split(',');
+			document.getElementById("replace").value = answer[0];
+			document.getElementById("replace1").value = answer[1];
+			document.getElementById("replace2").value = answer[2];
+			document.getElementById("replace3").value = answer[3];
+			document.getElementById("replace4").value = answer[4];
+			document.getElementById("replace5").value = answer[5];
+			document.getElementById("replace6").value = answer[6];
+		}
+		
+		function replace()
+		{
+			var item = document.getElementById("replace").value + ',' + document.getElementById("replace1").value + ',' + document.getElementById("replace2").value + ',' + document.getElementById("replace3").value + ',' + document.getElementById("replace4").value + ',' + document.getElementById("replace5").value + ',' + document.getElementById("replace6").value;
+			localStorage.setItem(nowindex, item);
+			
+			alert("문제 "+nowindex+"번 수정되었습니다");
+			
+			document.getElementById('문제' + nowindex).textContent = "[문제" + nowindex + "]" + document.getElementById("replace").value;
+			
+			
+			setbutton(currentNode, nowindex)
+			
+			var con = document.getElementById("replaceproblem");
+			con.style.display = 'none';
+		}
+		
+		function solve()
+		{
+			var answer = localStorage.getItem(nowindex).split(',')[6];
+			
+			if (document.getElementById("solve6").value == answer)
+				alert('맞았습니다');
+			else
+				alert('틀렸습니다')
+				
+			var con = document.getElementById("solveproblem");
+			con.style.display = 'none';
+		}
+		
+		function remove(target)
+		{
+			if (currentNode.parentNode == document.body )
+				alert("Can't remove a top-level element.");
+			else
+			{
+				var targetid = '문제' + target.split(',')[1]
+				var oldNode = document.getElementById(targetid);
+				alert("문제 "+ target.split(',')[1]+"번 제거되었습니다");
+				switchTo(oldNode.parentNode);
+				currentNode.removeChild(oldNode);
+				currentNode = getElementById('문제' + idcount);
 			}
 		}
-	
+		
+		
+		function createNewNode(text,type)
+		{
+			var newNode = document.createElement("li");
+			nodeId = "문제" + idcount;
+			idcount++;
+			newNode.setAttribute("id", nodeId);
+			text = "[" + nodeId + "]" + text;
+			newNode.appendChild( document.createTextNode(text) );
+			return newNode;
+		}
+		
+		function switchTo( newNode )
+		{
+			currentNode.setAttribute("class", "");
+			currentNode = newNode;
+			currentNode.setAttribute("class", "highlighted");
+		}
+		
+		window.addEventListener("load", start, false);
+		
 	</script>
 	
 	<body>
 	
-		<Form>
-			<input type=button id=submit value="문제 편집"
-                onclick=selectedBtn(this.value) style="width: 100pt; height: 30pt; margin : 3px">
-			<input type=button id=submit value="문제 제출하기"
-                onclick=selectedBtn(this.value) style="width: 100pt; height: 30pt; margin : 3px">
-			<input type=button id=submit value="문제 풀기"
-                onclick=selectedBtn(this.value) style="width: 100pt; height: 30pt; margin : 3px"><br>
+		<h1 id = "bigheading" class = "highlighted">
+			Problem 3 문제 은행
+		<h1>
+		<p id = "para">문제 내역
+				<input type = "button" id = "openbtn" value = "문제 제출하기">
+		</p>
+		
+		<div id = "nav" class = "nav">
+			<form onsubmit = "return false" action = "#">
 				
-			<div id = "postproblem" style = "display : none">
-				문제 설명<input type="text" id="explain" name = "posttext" style="width:200px; height:30; letter-spacing: 1px"><br>
+				<div id = "postproblem" style = "display : none">
+					<p>	문제 Title<input type = "text" id = "append"> <br>
+						Select 1. <input type = "text" id = "append1"> <br>
+						Select 2. <input type = "text" id = "append2"> <br>
+						Select 3. <input type = "text" id = "append3"> <br>
+						Select 4. <input type = "text" id = "append4"> <br>
+						Select 5. <input type = "text" id = "append5"> <br>
+						정답 <input type = "text" id = "append6">
+						<input type = "button" id = "appendButton" value = "문제 제출">
+					</p>
+				</div>
 				
+				<div id = "replaceproblem" style = "display : none">
+					<p>	문제 Title<input type = "text" id = "replace"> <br>
+						Select 1. <input type = "text" id = "replace1"> <br>
+						Select 2. <input type = "text" id = "replace2"> <br>
+						Select 3. <input type = "text" id = "replace3"> <br>
+						Select 4. <input type = "text" id = "replace4"> <br>
+						Select 5. <input type = "text" id = "replace5"> <br>
+						정답 <input type = "text" id = "replace6">
+						<input type = "button" id = "replaceButton" value = "문제 수정">
+					</p>
+				</div>
 				
-				<input type="text" id="posttext" name = "posttext" style="width:500px; height:300px; letter-spacing: 1px"><br>
-				
-				1. <input type="text" id="pa1" style="width:150px; height:30px; letter-spacing: 1px"><br>
-				2. <input type="text" id="pa2" style="width:150px; height:30px; letter-spacing: 1px"><br>
-				3. <input type="text" id="pa3" style="width:150px; height:30px; letter-spacing: 1px"><br>
-				4. <input type="text" id="pa4" style="width:150px; height:30px; letter-spacing: 1px"><br>
-				5. <input type="text" id="pa5" style="width:150px; height:30px; letter-spacing: 1px"><br>
-				
-				정답 : <input type="text" id="postanswer" style="width:120px; height:30px; letter-spacing: 1px"><br>
-			
-			<input type=button id=submit value="문제 저장"
-                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt; margin : 3px">
-			</div>
-			
-			<div id = "solveproblem" style = "display : none">
-				<input type="text" name="solvetext" style="width:500px; height:300px; letter-spacing: 1px"><br>
-				
-				1. <input type="text" name="sa1" style="width:150px; height:30px; letter-spacing: 1px"><br>
-				2. <input type="text" name="sa2" style="width:150px; height:30px; letter-spacing: 1px"><br>
-				3. <input type="text" name="sa3" style="width:150px; height:30px; letter-spacing: 1px"><br>
-				4. <input type="text" name="sa4" style="width:150px; height:30px; letter-spacing: 1px"><br>
-				5. <input type="text" name="sa5" style="width:150px; height:30px; letter-spacing: 1px"><br>
-				
-				정답 : <input type="text" name="solveanswer" style="width:120px; height:30px; letter-spacing: 1px"><br>
-			
-			<input type=button id=submit value="문제 제출"
-                onclick=selectedBtn(this.value) style="width: 50pt; height: 30pt; margin : 3px">
-			</div>
-			
-		</Form>
+				<div id = "solveproblem" style = "display : none">
+					<p>	문제 Title<input type = "text" id = "solve"> <br>
+						Select 1. <input type = "text" id = "solve1"> <br>
+						Select 2. <input type = "text" id = "solve2"> <br>
+						Select 3. <input type = "text" id = "solve3"> <br>
+						Select 4. <input type = "text" id = "solve4"> <br>
+						Select 5. <input type = "text" id = "solve5"> <br>
+						정답 <input type = "text" id = "solve6">
+						<input type = "button" id = "solveButton" value = "정답 제출">
+					</p>
+				</div>
+			</form>
+		</div>
 	</body>
-	
 </html>
