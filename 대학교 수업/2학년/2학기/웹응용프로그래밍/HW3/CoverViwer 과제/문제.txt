@@ -1,0 +1,9 @@
+coverviewer에서 'id' 수정하기
+
+
+
+JavaScript DOM 슬라이드 Fig. 12.18: coverviewer.html의
+
+img src 태그 내에 'id'를 이용하여 작성된 코드를,
+
+id를 사용하지 않고도 작동이 가능하도록 만들 것.
