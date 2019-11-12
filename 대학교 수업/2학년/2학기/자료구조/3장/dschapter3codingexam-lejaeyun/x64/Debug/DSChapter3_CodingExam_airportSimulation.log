@@ -1,8 +1,0 @@
-﻿  airportSimulation.cpp
-C:\Users\이재윤\Desktop\공부\C언어 프로젝트\Github\dschapter3codingexam-lejaeyun\airportSimulation.cpp(268): warning C4715:  'findSmallLandingQueue': 모든 제어 경로에서 값을 반환하지는 않습니다.
-C:\Users\이재윤\Desktop\공부\C언어 프로젝트\Github\dschapter3codingexam-lejaeyun\airportSimulation.cpp(282): warning C4715:  'findSmallTakeoffQueue': 모든 제어 경로에서 값을 반환하지는 않습니다.
-C:\Users\이재윤\Desktop\공부\C언어 프로젝트\Github\dschapter3codingexam-lejaeyun\queue.h(175): warning C4172:  지역 변수 또는 임시: retValue의 주소를 반환하고 있습니다.
-C:\Users\이재윤\Desktop\공부\C언어 프로젝트\Github\dschapter3codingexam-lejaeyun\queue.h(175): warning C4172:  지역 변수 또는 임시: retValue의 주소를 반환하고 있습니다.
-C:\Users\이재윤\Desktop\공부\C언어 프로젝트\Github\dschapter3codingexam-lejaeyun\queue.h(97): warning C4172:  지역 변수 또는 임시: retValue의 주소를 반환하고 있습니다.
-C:\Users\이재윤\Desktop\공부\C언어 프로젝트\Github\dschapter3codingexam-lejaeyun\queue.h(97): warning C4172:  지역 변수 또는 임시: retValue의 주소를 반환하고 있습니다.
-  DSChapter3_CodingExam_airportSimulation.vcxproj -> C:\Users\이재윤\Desktop\공부\C언어 프로젝트\Github\dschapter3codingexam-lejaeyun\x64\Debug\DSChapter3_CodingExam_airportSimulation.exe
