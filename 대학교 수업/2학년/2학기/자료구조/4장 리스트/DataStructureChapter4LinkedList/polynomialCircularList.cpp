@@ -16,6 +16,7 @@ struct Term
 	int coef;
 	int exp;
 	void EnterTerm() { cout << endl << "coef: "; cin >> coef; cout << endl << "exp: "; cin>> exp; };
+	void Init(int c, int e) { coef = c; exp = e; };
 };
 
 ostream& operator<<(ostream& os, Term e)
@@ -133,6 +134,7 @@ ostream& operator<<(ostream& os, CircList<Term>& l)
 	CircListIterator<Term> li(l);
 	if (!li.NotNull()) return os;
 	os << *li.First();
+	if (!li.NotNull()) return os;
 	while (li.NextNotNull())
 		os << " + " << *li.Next();
 	os << endl;
@@ -161,16 +163,62 @@ private:
 	CircList<Term> poly;
 public:
 	template <class Type>
-	friend ostream& operator<<(ostream&, Polynomial&);//polynomial 출력
-	/*
+	friend ostream& operator<<(ostream& os, Polynomial<Type>& p)
+	{
+		os << p.poly;
+		return os;
+	};//polynomial 출력
+
 	template <class Type>
-	friend istream& operator>>(istream&, Polynomial&);//polynomial 출력
-	*/
-	friend Polynomial operator+(const Polynomial&, const Polynomial&);//polynomial ADD()
+	friend Polynomial operator+(const Polynomial<Type>& a, const Polynomial<Type>& b)
+	{
+		Term* p, * q, temp;
+		CircListIterator<Term> Aiter(a.poly);
+		CircListIterator<Term> Biter(b.poly);
+		Polynomial<Type> c;
+
+		p = Aiter.First();
+		q = Biter.First();
+
+		int x = 0;
+		while (Aiter.NotNull() && Biter.NotNull()) {
+			switch (compare(p->exp, q->exp)) {
+			case '=':
+				x = p->coef + q->coef;
+				temp.Init(x, q->exp);
+				c.poly.Attach(temp);
+				p = Aiter.Next();
+				q = Biter.Next();
+				break;
+			case '<':
+				temp.Init(q->coef, q->exp);
+				c.poly.Attach(temp);
+				q = Biter.Next();
+				break;
+			case '>':
+				temp.Init(p->coef, p->exp);
+				c.poly.Attach(temp);
+				p = Aiter.Next();
+			}
+		}
+		while (Aiter.NotNull()) {
+			temp.Init(p->coef, p->exp);
+			c.poly.Attach(temp);
+			p = Aiter.Next();
+		}
+		while (Biter.NotNull()) {
+			temp.Init(q->coef, q->exp);
+			c.poly.Attach(temp);
+			q = Biter.Next();
+		}
+		return c;
+	};//polynomial ADD()
+
 	Polynomial();//생성자 정의 필요-head node를 갖는 경우
 	void Add(Term e);
 	int GetData();
 	/*
+	template <class Type>
 	T Evaluate(T&) const;//f(x)에 대하여 x에 대한 값을 구한다
 	Polynomial<T> Multiply(Polynomial<T>&); //f(x) * g(x)
 	Polynomial(const Polynomial<T>& p); //copy constructor
@@ -184,7 +232,7 @@ public:
 template <class Type>
 Polynomial<Type>::Polynomial()
 {
-	poly = 0;
+	;
 }
 template <class Type>
 int Polynomial<Type>::GetData() {
@@ -205,17 +253,31 @@ int Polynomial<Type>::GetData() {
 	terms = finish - start + 1;
 	return 0;
 }
+
 template <class Type>
 void Polynomial<Type>::Add(Term e)
 {
+	Term* p, * q, temp;
+	CircListIterator<Term> Aiter(poly);
+	p = Aiter.First();
+	Polynomial c;
+
+	int x = 0;
+	while (Aiter.NotNull()) {
+		switch (compare(p->exp, e.exp)) {
+		case '=':
+			p->coef = p->coef + e.coef;
+			return;
+		case '<':
+			poly.Attach(e);
+			return;
+		case '>':
+			p = Aiter.Next();
+		}
+	}
 	poly.Attach(e);
 }
-template <class Type>
-ostream& operator<<(ostream& os, Polynomial<Type>& p)
-{
-	os << p.poly;
-	return os;
-}
+
 
 char compare(int a, int b)
 {
@@ -223,55 +285,12 @@ char compare(int a, int b)
 	if (a < b) return '<';
 	return '>';
 }
-template <class Type>
-Polynomial<Type>& operator+(const Polynomial<Type>& a, const Polynomial<Type>& b)
-{
-	Term* p, * q, temp;
-	CircListIterator<Term> Aiter(a.poly);
-	CircListIterator<Term> Biter(b.poly);
-	Polynomial<Type> c;
 
-	p = Aiter.First();
-	q = Biter.First();
-
-	int x = 0;
-	while (Aiter.NotNull() && Biter.NotNull()) {
-		switch (compare(p->exp, q->exp)) {
-		case '=':
-			x = p->coef + q->coef;
-			temp.Init(x, q->exp);
-			if (x) c.poly.Attach(temp);
-			p = Aiter.Next();
-			q = Biter.Next();
-			break;
-		case '<':
-			temp.Init(q->coef, q->exp);
-			c.poly.Attach(temp);
-			q = Biter.Next();
-			break;
-		case '>':
-			temp.Init(p->coef, p->exp);
-			c.poly.Attach(temp);
-			p = Aiter.Next();
-		}
-	}
-	while (Aiter.NotNull()) {
-		temp.Init(p->coef, q->exp);
-		c.poly.Attach(temp);
-		p = Aiter.Next();
-	}
-	while (Biter.NotNull()) {
-		temp.Init(q->coef, q->exp);
-		c.poly.Attach(temp);
-		q = Biter.Next();
-	}
-	return c;
-}
 //page 209, Program 4.25: adding two polynomials as circular lists with head nodes=> 수정하는 것을 실습
 
 int main()
 {
-	Polynomial<int> p, q, r;
+	Polynomial<int> p, q, r , u , t, s;
 	char select;
 	Term e;
 	cout << endl << "Select command: a: Add_a, b: Add_b, p: a + b, d: DisplayAll, q: exit" << endl;
@@ -290,24 +309,22 @@ int main()
 			break;
 		case 'p': //a+b
 			r = p + q;
-			Polynomial<int> r = p + q;
 			cout << "do: r = p + q" << endl << "output: \n" << r << endl;
 
-			Polynomial<int> s;
 			cout << "output s" << endl << s << endl;
 
-			Polynomial<int> t = s + s;
+			t = s + s;
 			cout << "do: t = s + s" << endl << "output: \n" << t << endl;
 
-			Polynomial<int> u = p + p;
+			u = p + p;
 			cout << "do: u = p + p" << endl << "output: \n" << u << endl;
-			delete q;
 			break;
 		case 'd':
 			cout << "display all: " << endl;
-			cout << p;
-			cout << q;
-			cout << r;
+			cout << "p : " << p << endl;
+			cout << "q : " << q << endl;
+			cout << "r : " << r << endl;
+			break;
 		default:
 			cout << "WRONG INPUT  " << endl;
 			cout << "Re-Enter" << endl;
