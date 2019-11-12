@@ -160,8 +160,102 @@ class Polynomial
 private:
 	CircList<Term> poly;
 public:
-	friend ostream& operator<<(ostream&, Polynomial&);//polynomial 출력
-	friend Polynomial operator+(const Polynomial&, const Polynomial&);//polynomial ADD()
+
+	template <class Type>
+	friend ostream& operator<<(ostream& os, Polynomial<Type>& p)
+	{
+		os << p.poly;
+		return os;
+	};//polynomial 출력
+
+	template <class Type>
+	friend Polynomial operator+(const Polynomial<Type>& a, const Polynomial<Type>& b)
+	{
+		Term* p, * q, temp;
+		CircListIterator<Term> Aiter(a.poly);
+		CircListIterator<Term> Biter(b.poly);
+		Polynomial<Type> c;
+
+		p = Aiter.First();
+		q = Biter.First();
+
+		int x = 0;
+		while (Aiter.NotNull() && Biter.NotNull()) {
+			switch (compare(p->exp, q->exp)) {
+			case '=':
+				x = p->coef + q->coef;
+				temp.Init(x, q->exp);
+				if (x) c.poly.Attach(temp);
+				p = Aiter.Next();
+				q = Biter.Next();
+				break;
+			case '<':
+				temp.Init(q->coef, q->exp);
+				c.poly.Attach(temp);
+				q = Biter.Next();
+				break;
+			case '>':
+				temp.Init(p->coef, p->exp);
+				c.poly.Attach(temp);
+				p = Aiter.Next();
+			}
+		}
+		while (Aiter.NotNull()) {
+			temp.Init(p->coef, q->exp);
+			c.poly.Attach(temp);
+			p = Aiter.Next();
+		}
+		while (Biter.NotNull()) {
+			temp.Init(q->coef, q->exp);
+			c.poly.Attach(temp);
+			q = Biter.Next();
+		}
+		return c;
+	};//polynomial ADD()
+	friend Polynomial operator*(const Polynomial<Type>& a, const Polynomial<Type>& b)
+	{
+		Term* p, * q, temp;
+		CircListIterator<Term> Aiter(a.poly);
+		CircListIterator<Term> Biter(b.poly);
+		Polynomial<Type> c;
+
+		p = Aiter.First();
+		q = Biter.First();
+
+		int x = 0;
+		while (Aiter.NotNull() && Biter.NotNull()) {
+			switch (compare(p->exp, q->exp)) {
+			case '=':
+				x = p->coef + q->coef;
+				temp.Init(x, q->exp);
+				if (x) c.poly.Attach(temp);
+				p = Aiter.Next();
+				q = Biter.Next();
+				break;
+			case '<':
+				temp.Init(q->coef, q->exp);
+				c.poly.Attach(temp);
+				q = Biter.Next();
+				break;
+			case '>':
+				temp.Init(p->coef, p->exp);
+				c.poly.Attach(temp);
+				p = Aiter.Next();
+			}
+		}
+		while (Aiter.NotNull()) {
+			temp.Init(p->coef, q->exp);
+			c.poly.Attach(temp);
+			p = Aiter.Next();
+		}
+		while (Biter.NotNull()) {
+			temp.Init(q->coef, q->exp);
+			c.poly.Attach(temp);
+			q = Biter.Next();
+		}
+		return c;
+	};//polynomial ADD()
+
 	Polynomial();//생성자 정의 필요-head node를 갖는 경우
 	void Add(Term e);
 	int GetData();
@@ -169,7 +263,7 @@ public:
 template <class Type>
 Polynomial<Type>::Polynomial()
 {
-	poly = 0;
+	;
 }
 template <class Type>
 int Polynomial<Type>::GetData() {
@@ -195,62 +289,12 @@ void Polynomial<Type>::Add(Term e)
 {
 	poly.Attach(e);
 }
-template <class Type>
-ostream& operator<<(ostream& os, Polynomial<Type>& p)
-{
-	os << p.poly;
-	return os;
-}
 
 char compare(int a, int b)
 {
 	if (a == b) return '=';
 	if (a < b) return '<';
 	return '>';
-}
-template <class Type>
-Polynomial<Type> operator+(const Polynomial<Type>& a, const Polynomial<Type>& b)
-{
-	Term* p, * q, temp;
-	CircListIterator<Term> Aiter(a.poly);
-	CircListIterator<Term> Biter(b.poly);
-	Polynomial<Type> c;
-
-	p = Aiter.First();
-	q = Biter.First();
-
-	int x = 0;
-	while (Aiter.NotNull() && Biter.NotNull()) {
-		switch (compare(p->exp, q->exp)) {
-		case '=':
-			x = p->coef + q->coef;
-			temp.Init(x, q->exp);
-			if (x) c.poly.Attach(temp);
-			p = Aiter.Next();
-			q = Biter.Next();
-			break;
-		case '<':
-			temp.Init(q->coef, q->exp);
-			c.poly.Attach(temp);
-			q = Biter.Next();
-			break;
-		case '>':
-			temp.Init(p->coef, p->exp);
-			c.poly.Attach(temp);
-			p = Aiter.Next();
-		}
-	}
-	while (Aiter.NotNull()) {
-		temp.Init(p->coef, q->exp);
-		c.poly.Attach(temp);
-		p = Aiter.Next();
-	}
-	while (Biter.NotNull()) {
-		temp.Init(q->coef, q->exp);
-		c.poly.Attach(temp);
-		q = Biter.Next();
-	}
-	return c;
 }
 //page 209, Program 4.25: adding two polynomials as circular lists with head nodes=> 수정하는 것을 실습
 

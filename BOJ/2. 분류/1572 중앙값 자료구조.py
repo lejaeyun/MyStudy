@@ -15,8 +15,11 @@ def main() :
         heapq.heappush(arr, num)
         check.append(num)
         if index >= k:
+            for i in range(k//2) :
+                
+                heapq.heappop(arr)
+                
             result += arr[(k)//2]
-            arr.pop()
         index = index + 1
             
     print(result)
