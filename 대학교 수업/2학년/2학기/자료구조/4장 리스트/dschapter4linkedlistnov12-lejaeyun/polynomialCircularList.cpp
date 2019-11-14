@@ -15,7 +15,7 @@ struct Term
 {
 	int coef;
 	int exp;
-	void EnterTerm() { cout << endl << "coef: "; cin >> coef; cout << endl << "exp: "; cin>> exp; };
+	void EnterTerm() { cout << endl << "coef: "; cin >> coef; cout << endl << "exp: "; cin >> exp; };
 	void Init(int c, int e) { coef = c; exp = e; };
 };
 
@@ -135,10 +135,18 @@ CircList<Type>::~CircList()
 ostream& operator<<(ostream& os, CircList<Term>& l)
 {
 	CircListIterator<Term> li(l);
+	Term* p;
+	int a = 0;
 	if (!li.NotNull()) return os;
-	os << *li.First();
 	while (li.NextNotNull()) {
-		os << " + " << *li.Next();
+		p = li.Next();
+		if (p->coef != 0 && a != 0)
+			os << " + " << *p;
+		else if (p->coef != 0 && a == 0) {
+			os << *p;
+			a = 1;
+		}
+			
 	}
 	os << endl;
 	return os;
@@ -190,12 +198,12 @@ public:
 
 
 	template <class Type>
-	friend Polynomial operator+(const Polynomial<Type>& a, const Polynomial<Type>& b)
+	friend Polynomial<Type>* operator+(const Polynomial<Type>& a, const Polynomial<Type>& b)
 	{
 		Term* p, * q, temp;
 		CircListIterator<Term> Aiter(a.poly);
 		CircListIterator<Term> Biter(b.poly);
-		Polynomial<Type> c;
+		Polynomial<Type>* c = new Polynomial<Type>;
 
 		p = Aiter.First();
 		q = Biter.First();
@@ -206,41 +214,41 @@ public:
 			case '=':
 				x = p->coef + q->coef;
 				temp.Init(x, q->exp);
-				c.Add(temp);
+				c->Add(temp);
 				p = Aiter.Next();
 				q = Biter.Next();
 				break;
 			case '<':
 				temp.Init(q->coef, q->exp);
-				c.Add(temp);
+				c->Add(temp);
 				q = Biter.Next();
 				break;
 			case '>':
 				temp.Init(p->coef, p->exp);
-				c.Add(temp);
+				c->Add(temp);
 				p = Aiter.Next();
 			}
 		}
 		while (Aiter.NotNull()) {
 			temp.Init(p->coef, p->exp);
-			c.Add(temp);
+			c->Add(temp);
 			p = Aiter.Next();
 		}
 		while (Biter.NotNull()) {
 			temp.Init(q->coef, q->exp);
-			c.Add(temp);
+			c->Add(temp);
 			q = Biter.Next();
 		}
 		return c;
 	};//polynomial ADD()
 
 	template <class Type>
-	friend Polynomial<Type> operator*(const Polynomial<Type>& a, const Polynomial<Type>& b) {
+	friend Polynomial<Type>* operator*(const Polynomial<Type>& a, const Polynomial<Type>& b) {
 
-		Term* p, * q, temp, *f;
+		Term* p, * q, temp, * f;
 		CircListIterator<Term> Aiter(a.poly);
 		CircListIterator<Term> Biter(b.poly);
-		Polynomial<Type> c;
+		Polynomial<Type>* c = new Polynomial<Type>;
 
 		p = Aiter.First();
 		q = Biter.First();
@@ -249,13 +257,12 @@ public:
 		while (Aiter.NotNull()) {
 			while (Biter.NotNull()) {
 				temp.Init(p->coef * q->coef, q->exp + p->exp);
-				c.Add(temp);
+				c->Add(temp);
 				q = Biter.Next();
 			}
 			q = Biter.Next();
 			p = Aiter.Next();
 		}
-		cout << c << endl;
 		return c;
 	}
 	template <class Type>
@@ -338,7 +345,7 @@ void Polynomial<Type>::Add(Term e)
 			p->coef = p->coef + e.coef;
 			return;
 		case '<':
-			poly.Insert(e,x);
+			poly.Insert(e, x);
 			return;
 		case '>':
 			p = Aiter.Next();
@@ -360,7 +367,7 @@ char compare(int a, int b)
 
 int main()
 {
-	Polynomial<int> p, q, r,s,t,u, c;
+	Polynomial<int> p, q, *r, s, *t, *u, *c;
 	char select;
 	Term e;
 	cout << endl << "Select command: a: Add_a, b: Add_b, p: a + b, d: DisplayAll, q: exit" << endl;
@@ -372,37 +379,29 @@ int main()
 		case 'a':
 			cout << "Add a new term to p: " << endl;
 			cin >> p;
-			c = p+p;
-			cout << 11 << endl;
+			c = p * p;
 			break;
 		case 'b':
 			cout << "Add a new term to q: " << endl;
 			cin >> q;
 			break;
 		case 'p':
-			c = (p+q);
-			cout << c;
-			/*
-			c = p * q;
-			cout << c;
 			r = p + q;
-			cout << "do: r = p + q" << endl << "output: \n" << r << endl;
+			cout << "do: r = p + q" << endl << "output: \n" << *r << endl;
 
 			cout << "output s" << endl << s << endl;
 
 			t = s + s;
-			cout << "do: t = s + s" << endl << "output: \n" << t << endl;
+			cout << "do: t = s + s" << endl << "output: \n" << *t << endl;
 
 			u = p + p;
-			cout << "do: u = p + p" << endl << "output: \n" << u << endl;
-			*/
+			cout << "do: u = p + p" << endl << "output: \n" << *u << endl;
 			break;
 		case 'd':
 			cout << "display all: " << endl;
 			cout << p;
 			cout << q;
 			cout << r;
-			cout << c;
 			break;
 		default:
 			cout << "WRONG INPUT  " << endl;
