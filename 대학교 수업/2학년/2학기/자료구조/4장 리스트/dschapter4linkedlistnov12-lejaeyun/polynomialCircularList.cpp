@@ -333,10 +333,7 @@ void Polynomial<Type>::Add(Term e)
 {
 	Term* p, * q, temp;
 	CircListIterator<Term> Aiter(poly);
-	CircListIterator<Term> Biter(poly);
 	p = Aiter.First();
-	p = Biter.First();
-	Polynomial c;
 
 	int x = 0;
 	while (Aiter.NotNull()) {
