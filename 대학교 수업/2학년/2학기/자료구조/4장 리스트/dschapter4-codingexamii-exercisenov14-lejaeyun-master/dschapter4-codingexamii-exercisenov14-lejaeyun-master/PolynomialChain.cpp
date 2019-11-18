@@ -51,9 +51,12 @@ int main(void) {
 			break;
 		case 'e':
 			cout << "evaluete: " << endl;
-			//resultf = f.evaluate(coef, exp);//iterator 사용
-			//resultg = g.evaluate(coef, exp);
-			//resulth = h.evaluate(coef, exp);
+			int resultf = f.evaluate(coef, exp);//iterator 사용
+			cout << "resultf : " << resultf;
+			int resultg = g.evaluate(coef, exp);
+			cout << "resultg : " << resultf;
+			int resulth = h->evaluate(coef, exp);
+			cout << "resulth : " << resultf;
 			break;
 		default:
 			cout << "WRONG INPUT  " << endl;
