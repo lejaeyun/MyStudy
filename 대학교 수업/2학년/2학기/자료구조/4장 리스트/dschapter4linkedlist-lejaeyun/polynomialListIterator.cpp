@@ -313,6 +313,7 @@ int main(void) {
 			cout << "a+b: ";
 			a.addAll(&b);
 			a.display();
+			
 			break;
 		case 'd':
 			cout << "display all: " << endl;
