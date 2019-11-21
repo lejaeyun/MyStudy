@@ -38,9 +38,9 @@ int main(void) {
 			{
 				Chain<Term<int>>* t;
 				t = f * g;
-				cout << "t : " << *t;
+				cout << "t (f*g) : " << *t;
 				h = *t + *h;
-				cout << "h : " << *h ;
+				cout << "h (t+h) : " << *h ;
 			}
 			break;
 		case 'd':

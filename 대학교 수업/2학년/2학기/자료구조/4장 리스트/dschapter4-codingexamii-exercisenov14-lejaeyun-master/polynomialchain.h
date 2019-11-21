@@ -150,9 +150,11 @@ public:
 
 template <typename valType>
 inline ostream& operator<< (ostream& os, const Term<valType>& term) {
-	if (term.coef != 1 && term.coef != 0)
-		os << term.coef;
-	os  << "x^" << term.exp;
+	if (term.coef != 0) {
+		if (term.coef != 1)
+			os << term.coef;
+		os << "x^" << term.exp;
+	}
 	return os;
 }
 template <class T>
@@ -272,7 +274,6 @@ void Chain<T>::Add(const T& e) //add a new node after first
 		p->coef = p->coef + e.coef;
 		return;
 	case '<':
-		cout << curr->data.exp;
 		Insert(e, x);
 		return;
 	}
@@ -314,6 +315,7 @@ void Chain<T>::Concatenate(Chain<T> b) {
 		}
 	}
 }
+
 template <class T>
 void Chain<T>::InsertBack(const T& element) {
 
@@ -344,12 +346,14 @@ void Chain<T>::displayAll() {
 	}
 	cout << endl;
 }
+
 template <class T>
 ChainIterator<T>& ChainIterator<T>::operator ++() //preincrement
 {
 	current = current->link;
 	return *this;
 }
+
 template <class T>
 ChainIterator<T> ChainIterator<T>::operator ++(int) //post increment
 {
@@ -357,16 +361,19 @@ ChainIterator<T> ChainIterator<T>::operator ++(int) //post increment
 	current = current->link;
 	return old;
 }
+
 template <class T>
 bool ChainIterator<T>::NotNull() { //check the current element in list is non-null
 	if (current) return 1;
 	else return 0;
 }
+
 template <class T>
 bool ChainIterator<T>::NextNotNull() { //check the next element in list is non-null
 	if (current && current->link) return 1;
 	else return 0;
 }
+
 template <class T>
 T* ChainIterator<T>::Next() {//return a pointer to the next element of list
 	if (current) {
