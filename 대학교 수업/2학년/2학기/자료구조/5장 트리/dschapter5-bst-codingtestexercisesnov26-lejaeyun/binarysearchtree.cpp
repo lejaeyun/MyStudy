@@ -65,6 +65,7 @@ private:
 	void inorder_node(BstNode*);
 	void preorder_node(BstNode*);
 	void postorder_node(BstNode*);
+	int depth(BstNode*);
 };
 
 void BST::inorder()
@@ -84,6 +85,16 @@ void BST::postorder()
 	root->display(1);
 	postorder_node(root);
 };
+int BST::depth(BstNode* n) {
+	if (n == NULL) return 1;
+	int left_depth = depth(n->LeftChild);
+	int right_depth = depth(n->RightChild);
+
+	if (left_depth > right_depth)
+		return left_depth + 1;
+	else
+		return right_depth + 1;
+}
 
 void BST::inorder_node(BstNode * n)
 {
@@ -120,7 +131,6 @@ void BstNode::display(int i)
 	if (LeftChild) LeftChild->display(2 * i);
 	if (RightChild) RightChild->display(2 * i + 1);
 };
-
 
 Element* BST::Split(int i, BST& B, BST& C, Element& x)
 // Split the binary search tree with respect to key i
@@ -218,21 +228,44 @@ bool BST::Insert(const Element& x)
 {
 	BstNode* p = root;
 	BstNode* q = 0;
-
+	cout << depth(root) << endl;
 	while (p) {
 		q = p;
 		if (x.key == p->data.key) 
 			return false; //x.key is already in t
-		if (x.key < p->data.key)
+		if (x.key < p->data.key) {
+			p->BalancingFactor = depth(p) - depth(p->RightChild);
+			cout << "bf :" << p->BalancingFactor << endl;
+			if (p->BalancingFactor == 3)
+			{
+				p->BalancingFactor = 0;
+				p = p->LeftChild;
+				p->RightChild = root;
+				root->LeftChild = 0;
+				root = p;
+				p = root;
+				continue;
+			}
 			p = p->LeftChild;
-		else
+		}
+		else {
+			p->BalancingFactor = depth(p) - depth(p->LeftChild);
+			cout << "bf :" << p->BalancingFactor << endl;
+			if (p->BalancingFactor == 3) // equal -3
+			{
+				p->BalancingFactor = 0;
+				p = p->RightChild;
+				p->LeftChild = root;
+				root->RightChild = 0;
+				root = p;
+				p = root;
+				continue;
+			}
 			p = p->RightChild;
+		}
+			
 	};
 	// BalancingFactor = 깊이
-	//root->BalancingFactor = ();
-	if (root->BalancingFactor == 3 || root->BalancingFactor == -3) {
-
-	}
 	p = new BstNode;
 	p->LeftChild = p->RightChild = 0; p->data = x;
 	if (!root) root = p;
