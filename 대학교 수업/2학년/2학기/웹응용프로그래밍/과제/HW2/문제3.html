@@ -53,10 +53,9 @@
 		{
 		
 			var newNode = createNewNode( document.getElementById("append").value , 1 );
-			currentNode.appendChild(newNode);
-			switchTo(newNode);
+			currentNode.append(newNode);
 			
-			var item = document.getElementById("append").value + ',' + document.getElementById("append1").value + ',' + document.getElementById("append2").value + ',' + document.getElementById("append3").value + ',' + document.getElementById("append4").value + ',' + document.getElementById("append5").value + ',' + document.getElementById("append6").value;
+			var item = document.getElementById("append").value + ',' + document.getElementById("append1").value + ',' + document.getElementById("append2").value + ',' + document.getElementById("append3").value + ',' + document.getElementById("append4").value + ',' + document.getElementById("append5").value + ',' + document.getElementById("append6").value + ',' + document.getElementById("append7").value;
 			localStorage.setItem((idcount-1), item);
 			
 			document.getElementById("append").value = "";
@@ -69,11 +68,10 @@
 			
 			var con = document.getElementById("postproblem");
 			con.style.display = 'none';
-			setbutton(currentNode, idcount - 1)
 			
 		}
 		
-		function setbutton(nownode, num)
+		function setbutton(nownode)
 		{
 			
 			var jbBtn = document.createElement( 'button' );
@@ -116,6 +114,7 @@
 			document.getElementById("solve4").value = answer[4];
 			document.getElementById("solve5").value = answer[5];
 			document.getElementById("solve6").value = "";
+			document.getElementById("solve7").value = answer[6];
 		}
 		
 		
@@ -137,19 +136,17 @@
 			document.getElementById("replace4").value = answer[4];
 			document.getElementById("replace5").value = answer[5];
 			document.getElementById("replace6").value = answer[6];
+			document.getElementById("replace7").value = answer[7];
 		}
 		
 		function replace()
 		{
-			var item = document.getElementById("replace").value + ',' + document.getElementById("replace1").value + ',' + document.getElementById("replace2").value + ',' + document.getElementById("replace3").value + ',' + document.getElementById("replace4").value + ',' + document.getElementById("replace5").value + ',' + document.getElementById("replace6").value;
+			var item = document.getElementById("replace").value + ',' + document.getElementById("replace1").value + ',' + document.getElementById("replace2").value + ',' + document.getElementById("replace3").value + ',' + document.getElementById("replace4").value + ',' + document.getElementById("replace5").value + ',' + document.getElementById("replace6").value + ',' + document.getElementById("replace7").value;
 			localStorage.setItem(nowindex, item);
 			
 			alert("문제 "+nowindex+"번 수정되었습니다");
 			
-			document.getElementById('문제' + nowindex).textContent = "[문제" + nowindex + "]" + document.getElementById("replace").value;
-			
-			
-			setbutton(currentNode, nowindex)
+			document.getElementById("label" + nowindex).innerHTML = "[문제" + nowindex + "]" + document.getElementById("replace").value;
 			
 			var con = document.getElementById("replaceproblem");
 			con.style.display = 'none';
@@ -176,10 +173,8 @@
 			{
 				var targetid = '문제' + target.split(',')[1]
 				var oldNode = document.getElementById(targetid);
-				alert("문제 "+ target.split(',')[1]+"번 제거되었습니다");
-				switchTo(oldNode.parentNode);
-				currentNode.removeChild(oldNode);
-				currentNode = getElementById('문제' + idcount);
+				alert(targetid+"번 제거되었습니다");
+				oldNode.remove();
 			}
 		}
 		
@@ -188,18 +183,15 @@
 		{
 			var newNode = document.createElement("li");
 			nodeId = "문제" + idcount;
-			idcount++;
 			newNode.setAttribute("id", nodeId);
 			text = "[" + nodeId + "]" + text;
-			newNode.appendChild( document.createTextNode(text) );
+			var labelNode = document.createElement("label");
+			labelNode.setAttribute("id", "label" + idcount);
+			idcount++;
+			labelNode.innerHTML = text;
+			newNode.appendChild( labelNode );
+			setbutton(newNode, idcount - 1)
 			return newNode;
-		}
-		
-		function switchTo( newNode )
-		{
-			currentNode.setAttribute("class", "");
-			currentNode = newNode;
-			currentNode.setAttribute("class", "highlighted");
 		}
 		
 		window.addEventListener("load", start, false);
@@ -220,6 +212,7 @@
 				
 				<div id = "postproblem" style = "display : none">
 					<p>	문제 Title<input type = "text" id = "append"> <br>
+						설명. <input type = "text" id = "append7"> <br>
 						Select 1. <input type = "text" id = "append1"> <br>
 						Select 2. <input type = "text" id = "append2"> <br>
 						Select 3. <input type = "text" id = "append3"> <br>
@@ -232,6 +225,7 @@
 				
 				<div id = "replaceproblem" style = "display : none">
 					<p>	문제 Title<input type = "text" id = "replace"> <br>
+						설명. <input type = "text" id = "replace7"> <br>
 						Select 1. <input type = "text" id = "replace1"> <br>
 						Select 2. <input type = "text" id = "replace2"> <br>
 						Select 3. <input type = "text" id = "replace3"> <br>
