@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="test.xsl"?>
+<!DOCTYPE students SYSTEM "students.dtd">
+
+<students>
+	<student>
+		<pic picture="picSearch.jpg" />
+		<H2><name> 이재윤 </name></H2> <br/>
+		<student_id>201624548</student_id> <br/>
+		<address> 010-6260-0045 </address> <br/>
+		<email> lejaeyun@naver.com </email>  <br/>
+	</student>
+</students>

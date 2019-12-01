@@ -1,0 +1,7 @@
+﻿<!ELEMENT students (pic,name,student_id,address,email)>
+<!ELEMENT pic (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT student_id (#PCDATA)>
+<!ELEMENT address (#PCDATA)>
+<!ELEMENT email (#PCDATA)> 
+<!ATTLIST pic picture CDATA #IMPLIED>
