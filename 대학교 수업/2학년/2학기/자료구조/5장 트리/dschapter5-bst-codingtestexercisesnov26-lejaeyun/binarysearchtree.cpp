@@ -45,9 +45,11 @@ public:
 	void inorder();
 	void preorder();
 	void postorder();
+	bool find(BST&);
 
 	BST* ThreeWayJoin(BST* A, Element* x, BST* B);
 	BST* TwoWayJoin(BST* A, BST* B);
+	int numofelement();
 
 	void treeprint() { cout << "\n"; root->treeprint(1); }
 
@@ -66,6 +68,8 @@ private:
 	void preorder_node(BstNode*);
 	void postorder_node(BstNode*);
 	int depth(BstNode*);
+	int numofelement(BstNode*);
+	bool find(BstNode*, BST&);
 };
 
 void BST::inorder()
@@ -85,6 +89,7 @@ void BST::postorder()
 	root->display(1);
 	postorder_node(root);
 };
+
 int BST::depth(BstNode* n) {
 	if (n == NULL) return 1;
 	int left_depth = depth(n->LeftChild);
@@ -114,7 +119,6 @@ void BST::preorder_node(BstNode* n)
 	if (n->RightChild)
 		preorder_node(n->RightChild);
 };
-
 
 void BST::postorder_node(BstNode* n)
 {
@@ -192,12 +196,59 @@ BstNode* BST::Search(BstNode* b, const Element& x)
 	return Search(b->RightChild, x);
 };
 
-
-BstNode* BST::Search(const Element& x)
+int BST::numofelement()
 {
-	return Search(root, x);
+	return numofelement(root);
 }
 
+int BST::numofelement(BstNode* b)
+{
+	int num = 0;
+	if (b == root) num = 1;
+	if (b->LeftChild) {
+		num += 1;
+		int tmp = numofelement(b->LeftChild);
+		num += tmp;
+	}
+	if (b->RightChild) {
+		num += 1;
+		int tmp = numofelement(b->RightChild);
+		num += tmp;
+	}
+	return num;
+}
+
+bool equal(BST& A, BST& B)
+{
+	if (A.numofelement() != B.numofelement())
+		return false;
+
+	bool result = A.find(B);
+
+	return result;
+}
+
+bool BST::find(BST& B)
+{
+	return find(root, B);
+
+}
+
+bool BST::find(BstNode* p, BST& B)
+{
+	BstNode* tmp = Search(B.root, p->data);
+	if (!tmp) return false;
+	else return true;
+
+	if (p->LeftChild) {
+		return find(p->LeftChild, B);
+	}
+
+	if (p->RightChild) {
+		return find(p->LeftChild, B);
+	}
+
+}
 
 BstNode* BST::IterSearch(const Element& x)
 {
@@ -210,32 +261,16 @@ BstNode* BST::IterSearch(const Element& x)
 	return 0;
 }
 
-//BstNode* BST::Search(int k){//Search by rank;
-//	BstNode *t = root;
-//	while (1)
-//	{
-//		if (k == t->LeftSize) return t;
-//		if (k < t->LeftSize) t = t->LeftChild;
-//		else {
-//			k -= LeftSize;
-//			t = t->RightChild;
-//		}
-//	}
-//	return 0;
-//}
-
 bool BST::Insert(const Element& x)
 {
 	BstNode* p = root;
 	BstNode* q = 0;
-	cout << depth(root) << endl;
 	while (p) {
 		q = p;
 		if (x.key == p->data.key) 
 			return false; //x.key is already in t
 		if (x.key < p->data.key) {
 			p->BalancingFactor = depth(p) - depth(p->RightChild);
-			cout << "bf :" << p->BalancingFactor << endl;
 			if (p->BalancingFactor == 3)
 			{
 				p->BalancingFactor = 0;
@@ -250,7 +285,6 @@ bool BST::Insert(const Element& x)
 		}
 		else {
 			p->BalancingFactor = depth(p) - depth(p->LeftChild);
-			cout << "bf :" << p->BalancingFactor << endl;
 			if (p->BalancingFactor == 3) // equal -3
 			{
 				p->BalancingFactor = 0;
@@ -330,7 +364,7 @@ BST* BST::TwoWayJoin(BST* A, BST* B)
 int main() {
 	int select = 0;
 	int data = 0;
-	BST tree;
+	BST tree_A, tree_B, tree;
 	BST splitTree1;
 	BST splitTree2;
 	BST* joinTree = nullptr;
@@ -344,22 +378,33 @@ int main() {
 		case 0:
 			cout << "input value: ";
 			cin >> data;
-			tree.Insert(Element(data));// Insert()에서 BF를 체크하여 split하는 것을 호출해야 한다.
+			tree_A.Insert(Element(data));// Insert()에서 BF를 체크하여 split하는 것을 호출해야 한다.
 			break;
 		case 1:
-			//tree_B.insert();
+			cout << "input value: ";
+			cin >> data;
+			tree_B.Insert(Element(data));// Insert()에서 BF를 체크하여 split하는 것을 호출해야 한다.
 			break;
 		case 2:
-			tree.inorder();
+			cout << "tree A" << endl;
+			tree_A.inorder();
+			cout << "tree B" << endl;
+			tree_B.inorder();
 			break;
 		case 3:
-			tree.preorder();
+			cout << "tree A" << endl;
+			tree_A.preorder();
+			cout << "tree B" << endl;
+			tree_B.preorder();
 			break;
 		case 4:
-			tree.postorder();
+			cout << "tree A" << endl;
+			tree_A.postorder();
+			cout << "tree B" << endl;
+			tree_B.postorder();
 			break;
 		case 5:
-			//equal(tree_A, tree_B);
+			cout << equal(tree_A, tree_B) << endl;
 			break;
 		case 6:
 			cout << "intput splited tree note: ";
@@ -390,7 +435,7 @@ int main() {
 			break;
 
 		}
-	} while (select < 5);
+	} while (select < 6);
 
 	return 0;
 }
