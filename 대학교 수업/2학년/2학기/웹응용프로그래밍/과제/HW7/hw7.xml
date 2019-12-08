@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet version="2.0" type="text/xsl" href="test.xsl"?>
+
+<!DOCTYPE students [
+	<!ELEMENT students (name,student_id,address,email)>
+	<!ELEMENT name (#PCDATA)>
+	<!ELEMENT student_id (#PCDATA)>
+	<!ELEMENT address (#PCDATA)>
+	<!ELEMENT email (#PCDATA)> 
+	<!ATTLIST name picture CDATA #IMPLIED>
+]>
+
+<students>
+	<name picture = "pic.jpg"> 이재윤 </name>
+	<student_id>201624548</student_id>
+	<address> 010-6260-0045 </address>
+	<email> lejaeyun@naver.com </email> 
+</students>

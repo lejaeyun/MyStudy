@@ -1,4 +1,4 @@
-﻿<!ELEMENT students (pic,name,student_id,address,email)>
+<!ELEMENT students (pic,name,student_id,address,email)>
 <!ELEMENT pic (#PCDATA)>
 <!ELEMENT name (#PCDATA)>
 <!ELEMENT student_id (#PCDATA)>
