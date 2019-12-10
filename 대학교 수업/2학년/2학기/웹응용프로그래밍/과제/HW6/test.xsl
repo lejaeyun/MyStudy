@@ -7,18 +7,18 @@
 		</head>
 	<body>
 			<xsl:for-each select = "students">
-				<xsl:value-of select="name"/> <br/>
-				<xsl:value-of select="student_id"/> <br/>
-				<xsl:value-of select="address"/> <br/>
-				<xsl:value-of select="email"/> <br/>
 				<img>
 					<xsl:attribute name="SRC">
 						<xsl:value-of select="pic/@picture"/>
 					</xsl:attribute>
 					<xsl:attribute name="align">
-						<xsl:value-of select="left"/>
+						<xsl:value-of select="pic/@align"/>
 					</xsl:attribute>
 				</img>
+				<h2><xsl:value-of select="name"/> </h2><br/>
+				<xsl:value-of select="student_id"/><br/>
+				<xsl:value-of select="address"/><br/>
+				<xsl:value-of select="email"/><br/>
 			</xsl:for-each>
 
 	</body>	

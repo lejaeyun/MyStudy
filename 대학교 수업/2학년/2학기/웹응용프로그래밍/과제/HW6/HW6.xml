@@ -2,9 +2,9 @@
 <?xml-stylesheet type="text/xsl" href="test.xsl"?>
 
 <students>
-	<pic picture="picSearch.jpg" />
+	<pic picture="picSearch.jpg" align = "left" />
 	<name> 키보드 </name>
 	<student_id>레오폴드 FC900R</student_id>
 	<address> 010-0000-0000 </address>
-	<email> afd@afsd.fdf </email>
+	<email> afd@afsd.com </email>
 </students>

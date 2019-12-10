@@ -43,6 +43,7 @@
 			}
 			
 			window.addEventListener("load", start, false);
+			
 		</script>
 	
 		<body>
@@ -57,18 +58,18 @@
 			<input type = "button" id = "appendButton" value = "제출">
 			
 			<xsl:for-each select = "students">
-				<xsl:value-of select="Name"/> <br/>
-				<xsl:value-of select="Student_id"/> <br/>
-				<xsl:value-of select="Address"/> <br/>
-				<xsl:value-of select="Email"/> <br/>
 				<img>
 					<xsl:attribute name="SRC">
 						<xsl:value-of select="Name/@picture"/>
 					</xsl:attribute>
 					<xsl:attribute name="align">
-						<xsl:value-of select="left"/>
+						<xsl:value-of select="Name/@align"/>
 					</xsl:attribute>
 				</img>
+				<xsl:value-of select="Name"/> <br/>
+				<xsl:value-of select="Student_id"/> <br/>
+				<xsl:value-of select="Address"/> <br/>
+				<xsl:value-of select="Email"/> <br/>
 			</xsl:for-each>
 		</body>	
 	</html>
