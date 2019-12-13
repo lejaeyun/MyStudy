@@ -15,10 +15,11 @@
 						<xsl:value-of select="pic/@align"/>
 					</xsl:attribute>
 				</img>
-				<h2><xsl:value-of select="name"/> </h2><br/>
-				<xsl:value-of select="student_id"/><br/>
-				<xsl:value-of select="address"/><br/>
-				<xsl:value-of select="email"/><br/>
+				<h2>신분증</h2><br/>
+				이름 : <xsl:value-of select="name"/> <br/>
+				학번 : <xsl:value-of select="student_id"/><br/>
+				연락처 : <xsl:value-of select="address"/><br/>
+				이메일 : <xsl:value-of select="email"/><br/>
 			</xsl:for-each>
 
 	</body>	
