@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="test.xsl"?>
+<?xml-stylesheet type="text/xsl" href="hw6.xsl"?>
 
 <students>
-	<pic picture="picSearch.jpg" />
-	<name> 키보드 </name>
-	<student_id>레오폴드 FC900R</student_id>
-	<address> 010-0000-0000 </address>
-	<email> afd@afsd.fdf </email>
+	<pic picture="pic.jpg" align = "left" width = "300" height = "300" border = "1" />
+	<name> 이재윤 </name>
+	<student_id> 201624548 </student_id>
+	<address> 010-6260-0045 </address>
+	<email> lejaeyun@naver.com </email>
+	<school> 부산대학교 </school>
 </students>

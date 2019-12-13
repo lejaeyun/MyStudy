@@ -1,0 +1,176 @@
+<html>
+	<head>
+		<title>HW7</title>
+		
+	<script language="javascript"> 
+	/*
+		alert("1111");
+		var outputHTML = "";
+		var idCounter = 1;
+		var depth = -1;
+		var current = null;
+		var previous = null;
+		
+		function loadXMLDocument ( url )
+		{
+			var xmlHttpRequest = new XMLHttpRequest();
+			xmlHttpRequest.open("get", url, false);
+			xmlHttpRequest.send(null);
+			var doc = xmlHttpRequest.responseXML;
+			buildHTML (doc.childNodes);
+			displayDoc();
+		}
+		
+		function buildHTML (childList)
+		{
+			depth = depth + 1;
+			for (var i = 0; i < childList.length; i++)
+			{
+				switch(childList[i].nodeType)
+				{
+					case 1:
+						{
+							outputHTML += "<div id=\"id" + idCounter + "\">";
+							spaceOutput(depth);
+							outputHTML += childList[i].nodeName;
+							++idCounter;
+							
+							if (childList[i].nodeName.length != 0)
+								buildHTML(childList[i].childNodes);
+							outputHTML += "</div>";
+							break;
+						}
+					case 3 :
+					case 8 :
+						{
+							if (childList[i].nodeValue.indexOf("   ") && childList[i].nodeValue.indexOf("      "))
+							{
+								outputHTML += "<div id=\"id" + idCounter + "\">" ;
+								spaceOutput(depth);
+								outputHTML += childList[i].nodeValue;
+								outputHTML += "</div>";
+								++idCounter;
+							}
+						}
+						
+				}
+			}
+			depth = depth - 1;
+		}
+		
+		function displayDoc()
+		{
+			document.getElementById("outputDiv").innerHTML = outputHTML;
+			current = document.getElementById("idl");
+			setCurrentNodeStyle (current.getAttrbute("id"), true);
+		}
+		
+		function spaceOutput(number)
+		{
+			for (var i = 0; i < number ; i++)
+			{
+				outputHTML += "&nbsp;&nbsp;&nbsp;";
+			}
+		}
+		*/
+		
+		
+		function start()
+		{
+			document.getElementById("appendButton").addEventListener("click", appendNode, false);
+			document.getElementById("PicName").value = "pic"
+			document.getElementById("Name").value = "이재윤"
+			document.getElementById("Student_id").value = "201624548"
+			document.getElementById("Email").value = "lejaeyun@naver.com"
+			document.getElementById("Address").value = "010-6260-0045"
+			document.getElementById("School").value = "부산대학교"
+			//loadXMLDocument("hw7.xml")
+		}
+		
+		function appendNode()
+		{
+		
+			var text="<student>";
+			text +=  "<PicName>" + document.getElementById("PicName").value +"</PicName>";
+			text +=  "<name>" + document.getElementById("Name").value +"</name>";
+			text +=  "<Student_id>"+ document.getElementById("Student_id").value +"</Student_id>";
+			text +=  "<Email>"+ document.getElementById("Email").value +"</Email>";
+			text +=  "<Address>"+ document.getElementById("Address").value +"</Address>";
+			text +=  "<School>"+ document.getElementById("School").value +"</School>";
+			text +=  "</student>";
+			
+			if (window.DOMParser)
+			{
+				parser=new DOMParser();
+				xmlDoc=parser.parseFromString(text,"text/xml");
+			}
+			else
+			{
+				xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+				xmlDoc.async=false;
+				xmlDoc.loadXML(text); 
+			} 
+			
+			x = xmlDoc.documentElement.childNodes;
+			var body = document.getElementById("output");
+
+			for ( var i in x) {
+				if (i == 0)
+				{
+					var img = document.createElement("img");        
+					img.src = x[i].childNodes[0].nodeValue + '.jpg'
+					img.width = "300";
+					img.height = "250";
+					img.border = "1"
+					img.align = "left"
+					body.appendChild(img); 
+					continue;
+				}
+				var li = document.createElement("label");
+				li.innerHTML = "";
+				if (i == 1){
+					li.innerHTML = "<p><h2>"+ x[i].childNodes[0].nodeValue + "</h2><br>";
+					console.log(x[i].childNodes[0].nodeValue);
+					body.appendChild(li);
+					continue;
+				}
+				else if (i == 2)
+					li.innerHTML += "학번 : "
+				else if (i == 3)
+					li.innerHTML += "이메일 : "
+				else if (i == 4)
+					li.innerHTML += "연락처 : "
+				else if (i == 5)
+					li.innerHTML += "학교 : "
+				li.innerHTML += x[i].childNodes[0].nodeValue + "<br><br>";
+				if (i == 5)
+					li.innerHTML += "</p>"
+				console.log(x[i].childNodes[0].nodeValue);
+				body.appendChild(li);
+			}
+			
+		}
+		
+		window.addEventListener("load", start, false);
+		
+	</script>
+		
+	</head>
+	
+
+	<body>
+		<p>
+		<div id = "AppendList">
+			PicName.<input type = "text" id = "PicName"> <br>
+			Name.<input type = "text" id = "Name"> <br>
+			Student_id. <input type = "text" id = "Student_id"> <br>
+			Email. <input type = "text" id = "Email"> <br>
+			Address. <input type = "text" id = "Address"> <br>
+			School. <input type = "text" id = "School"> <br>
+			<input type = "button" id = "appendButton" value = "제출">
+		</div>
+		</p>
+		<div id = "output"></div>
+		
+	</body>	
+</html>
