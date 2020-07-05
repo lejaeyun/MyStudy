@@ -1,0 +1,2 @@
+Intersection Area : 21
+Elapsed time : 0.00099945068359375

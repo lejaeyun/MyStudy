@@ -1,61 +1,55 @@
-#https://www.acmicpc.net/problem/1753
 import sys
 input = sys.stdin.readline
-from collections import deque
-import heapq
 
-INF = sys.maxsize
+def dijkstra(v_start, arr) :
+    INF = sys.maxsize
+    length = len(arr)
+    nvertex = v_start-1
+    visit = [False] * length
+    Result = [INF] * length
+    Result[nvertex] = 0
+    visit[nvertex] = True
 
-def dijkstra(mydict,start,v) :
-    stack = list()
-    for tmpw,tmpv in mydict[start] :
-        heapq.heappush(stack, [tmpw,tmpv])
-        
-    result = list()
-    for _ in range(v+1) :
-        result.append(INF)
-    result[start] = 0
+    for _ in range(length-1) :
+        mini = INF
 
-    minnxt = start
-    while stack:
-        minimum = INF
-        tmpnxt = result[minnxt]
-        while stack:
-            tmp = heapq.heappop(stack)
-            nxt = tmp[1]
-            w = tmp[0] + tmpnxt
-            if w < minimum :
-                minimum = w
-                minnxt = nxt
-            
-            if w < result[nxt] :
-                result[nxt] = w
+        for i in range(length) :
+            if i in arr[nvertex].keys() :
+                Result[i] = min( Result[i], Result[nvertex] + arr[nvertex][i] )
+
+        for i in range(length) :
+            if visit[i] == False and Result[i] < mini :
+                mini = Result[i];
+                vnear = i
                 
-        for tmpw,tmpv in mydict[minnxt] :
-            heapq.heappush(stack, [tmpw,tmpv])
-            
+        visit[vnear] = True
 
-    return result
+        for i in range(length) :
+            Result[vnear] = min( Result[vnear], Result[nvertex] + mini )
+
+        nvertex = vnear
+ 
+    return Result
 
 def main() :
-        V,E = map(int, input().split())
-        Start = int(input())
-        mydict = dict()
-        for i in range(1,V+1) :
-            mydict[i] = list()
+    INF = sys.maxsize
+    V,E = map(int, input().split())
+    start = int(input())
+    arr = [{} for _ in range(V)]
+    
+    for _ in range(E) :
+        u,v,w = map(int, input().split())
+        if v-1 not in arr[u-1].keys() :
+            arr[u-1][v-1] = w
+        else :
+            if arr[u-1][v-1] > w :
+                arr[u-1][v-1] = w
+                
+    result = dijkstra(start, arr)
 
-        for _ in range(E) :
-            u,v,w = map(int,input().split())
-            mydict[u].append([w,v])
-        
-        result = dijkstra(mydict, Start,V)
-        
+    for i in result :
+        print(i if i != INF else "INF")
 
-        for v in range(1, V+1) :
-            if result[v] == INF :
-                print("INF")
-                continue
-            print(result[v])
+    return
 
-        return 0
 main()
